@@ -27,6 +27,10 @@ public class Sound {
         soundURL[13] = getClass().getResource("/Sounds/Torpedoes_Online.wav");
         soundURL[14] = getClass().getResource("/Sounds/Torpedoes_Offline.wav");
         soundURL[15] = getClass().getResource("/Sounds/No_Torpedo.wav");
+        soundURL[16] = getClass().getResource("/Sounds/Shot_Collectible.wav");
+        soundURL[17] = getClass().getResource("/Sounds/Shield_Up.wav");
+        soundURL[18] = getClass().getResource("/Sounds/Hyper_Cooled.wav");
+
 
 
     }

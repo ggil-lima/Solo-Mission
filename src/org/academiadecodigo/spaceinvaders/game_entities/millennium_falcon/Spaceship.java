@@ -49,7 +49,7 @@ public class Spaceship extends GameObjects {
         speed = 0;
         backSpeed = 2;
         cannonHeat = 0;
-        torpedoCharges = 3;
+        torpedoCharges = 0;
         defaultSpeed = speed;
         defaultBackSpeed = backSpeed;
         defaultCannonHeat = cannonHeat;
@@ -64,7 +64,7 @@ public class Spaceship extends GameObjects {
         isHyperCooled = false;
         isOverHeated = false;
         isShooting = false;
-        DeflectorShield = true;
+        DeflectorShield = false;
         millenniumFalcon = setImage("/spaceship2.png");
         setPosX(16);
         setPosY(384);
@@ -364,6 +364,10 @@ public class Spaceship extends GameObjects {
 
     public boolean isHyperCooled() {
         return isHyperCooled;
+    }
+
+    public void resetCoolerCounter() {
+        coolerCounter = 0;
     }
 
     public void setHyperCooled(boolean hyperCooled) {

@@ -18,15 +18,17 @@ public class ShieldGenerator<T extends GameObjects> extends CollectibleObject {
         posX = object.getPosX();
         posY = object.getPosY();
 
-//        hc = setImage();
-        hitbox = new Circle(Operations.centerRect(posX, posX + 16), Operations.centerRect(posY, posY + 16), 8);
+        sG = setImage("/Shield_Gen.png");
+        hitbox = new Circle(Operations.centerRect(posX, posX + 32), Operations.centerRect(posY, posY + 32), 14);
     }
 
     public void draw(Graphics2D gfx) {
         if(!isDestroyed) {
-//            gfx.drawImage(sG, posX, posY, null);
-            gfx.setColor(Color.BLUE);
-            gfx.drawRect(posX, posY, 16, 16);
+            gfx.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            if(flicker) {
+                gfx.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            }
+            gfx.drawImage(sG, posX, posY, null);
         }
     }
 }

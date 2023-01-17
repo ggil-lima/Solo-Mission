@@ -18,17 +18,17 @@ public class MinorHyperMatterBooster<T extends GameObjects> extends CollectibleO
         posX = object.getPosX();
         posY = object.getPosY();
 
-        hitbox = new Circle(Operations.centerRect(posX, posX + 16), Operations.centerRect(posY, posY + 16), 8);
-//        hc = setImage();
+        hitbox = new Circle(Operations.centerRect(posX, posX + 32), Operations.centerRect(posY, posY + 32), 14);
+        mB = setImage("/Minor_HM.png");
     }
 
     public void draw(Graphics2D gfx) {
         if(!isDestroyed) {
-
-//            gfx.drawImage(mB, posX, posY, null);
-
-            gfx.setColor(Color.ORANGE);
-            gfx.drawRect(posX, posY, 16, 16);
+            gfx.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            if(flicker) {
+                gfx.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            }
+            gfx.drawImage(mB, posX, posY, null);
         }
     }
 }

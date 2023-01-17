@@ -466,8 +466,6 @@ public class GameBrain extends JPanel implements Runnable{
             drawBullets(gfx);
             drawSTorpedoes(gfx);
 
-            //COLLECTIBLES
-            drawCollectibles(gfx);
 
             //UI
             ui.hpBar(gfx);
@@ -475,6 +473,8 @@ public class GameBrain extends JPanel implements Runnable{
             ui.drawScore(gfx);
             ui.drawTorpedoUI(gfx);
 
+            //COLLECTIBLES
+            drawCollectibles(gfx);
         }
 
         // PAUSE STATE
@@ -965,22 +965,29 @@ public class GameBrain extends JPanel implements Runnable{
                 if (CollisionChecker.collides(collectible.getHitbox(), lasers.getHitbox())) {
                     collectible.setIsHit(true);
                     if (collectible instanceof HyperCoolant<?>) {
+                        sShip.resetCoolerCounter();
                         sShip.setHyperCooled(true);
+                        playSFX(18);
                     }
                     if (collectible instanceof MajorHyperMatterBooster<?>) {
                         sShip.majorBoost();
+                        playSFX(16);
                     }
                     if (collectible instanceof MinorHyperMatterBooster<?>) {
                         sShip.minorBoost();
+                        playSFX(16);
                     }
                     if (collectible instanceof ProtonTorpedoCharge<?>) {
-                       sShip.addTorpedoCharge();
+                        sShip.addTorpedoCharge();
+                        playSFX(16);
                     }
                     if (collectible instanceof ShieldGenerator<?>) {
+                        mShield.resetLives();
                         sShip.setDeflectorShield(true);
+                        playSFX(17);
                     }
+                    lasers.setIsDestroyed(true);
                 }
-                collectible.behaviour();
             }
         }
     }
@@ -989,9 +996,11 @@ public class GameBrain extends JPanel implements Runnable{
 
         for (MFLasers lasers : mfLasers) {
             if (CollisionChecker.collides(vShield.getHitbox(), lasers.getHitbox())) {
-                lasers.deflected();
-                playSFX(7);
-                vShield.reduceLives();
+                if(!lasers.isDeflected()) {
+                    lasers.deflected();
+                    playSFX(7);
+                    vShield.reduceLives();
+                }
             }
         }
     }
@@ -1129,32 +1138,30 @@ public class GameBrain extends JPanel implements Runnable{
                     enemyCounter++;
                 }
             }
-//        if(enemyCounter>7 && enemyCounter<= 15) {
-//            if (frameCounter == 100 || frameCounter == 120  ) {
-//                enemy.add(new EnemyFighter(this));
-//                enemyCounter++;
-//            }
-//        } if(enemyCounter>15 && enemyCounter<= 45) {
-//            if (frameCounter  == 200 || frameCounter == 240 || frameCounter == 260) {
-//                enemy.add(new EnemyFighter(this));
-//                enemyCounter++;
-//            }
-//        } if(enemyCounter>45 && enemyCounter<= 50) {
-//            if (frameCounter%150 == 0) {
-//                enemy.add(new EnemyFighter(this));
-//                enemyCounter++;
-//            }
-//        } if(enemyCounter>50 && enemyCounter<= 55) {
-//            if (frameCounter%100 == 0) {
-//                enemy.add(new EnemyFighter(this));
-//                enemyCounter++;
-//            }
-//        } if(enemyCounter>55 && enemyCounter<= 70) {
-//            if (frameCounter%20 == 0) {
-//                enemy.add(new EnemyFighter(this));
-//                enemyCounter++;
-//            }
-//        }
+            if(enemyCounter>7 && enemyCounter<= 45) {
+                if (frameCounter == 100 || frameCounter == 120  ) {
+                    fighters.add(new EnemyFighter(this));
+                    enemyCounter++;
+                }
+            }
+            if(enemyCounter>45 && enemyCounter<= 50) {
+                if (frameCounter  == 200 || frameCounter == 240 || frameCounter == 260) {
+                    fighters.add(new EnemyFighter(this));
+                    enemyCounter++;
+                }
+            }
+            if(enemyCounter>50 && enemyCounter<= 55) {
+                if (frameCounter%150 == 0) {
+                    fighters.add(new EnemyFighter(this));
+                    enemyCounter++;
+                }
+            }
+            if(enemyCounter>55 && enemyCounter<= 70) {
+                if (frameCounter%100 == 0) {
+                    fighters.add(new EnemyFighter(this));
+                    enemyCounter++;
+                }
+            }
         }
         if(gamePhase == beginPhase3) {
             if (!dsDefeated) {
@@ -1176,10 +1183,10 @@ public class GameBrain extends JPanel implements Runnable{
         if(i > 25 && i <= 30) {
             collectibles.add(new MajorHyperMatterBooster<>(enemy));
         }
-        if(i > 30 && i <= 33) {
+        if(i > 30 && i <= 32) {
             collectibles.add(new ProtonTorpedoCharge<>(enemy));
         }
-        if(i > 30 && i <= 33) {
+        if(i > 32 && i <= 35) {
             collectibles.add(new ShieldGenerator<>(enemy));
         }
     }
@@ -1247,6 +1254,8 @@ public class GameBrain extends JPanel implements Runnable{
 
     public void drawCollectibles(Graphics2D gfx) {
         for(Collectibles collectible : collectibles) {
+            collectible.animation(gfx);
+            collectible.behaviour();
             collectible.draw(gfx);
         }
     }

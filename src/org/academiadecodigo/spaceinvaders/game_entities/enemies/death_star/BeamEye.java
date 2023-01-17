@@ -20,7 +20,7 @@ public class BeamEye extends GameObjects {
         maxPosY = posY + 16;
         isDestroyed = false;
         lives = 50;
-        hitbox = new Circle(Operations.centerRect(posX, maxPosX), Operations.centerRect(posY, maxPosY), 8);
+        hitbox = new Circle(Operations.centerRect(posX, maxPosX), Operations.centerRect(posY, maxPosY), 12);
     }
     public void reduceLives(){
         lives--;

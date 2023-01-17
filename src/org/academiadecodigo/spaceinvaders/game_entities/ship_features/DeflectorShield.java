@@ -66,7 +66,7 @@ public class DeflectorShield<T extends GameObjects> extends GameObjects {
             if (lives < maxLives) {
                 shieldCounter++;
                 if (shieldCounter > 30) {
-                    if (shieldCounter % 30 == 0) {
+                    if (shieldCounter % 60 == 0) {
                         lives++;
                     }
                 }

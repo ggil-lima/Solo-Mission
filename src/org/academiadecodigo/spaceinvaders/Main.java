@@ -1,6 +1,5 @@
 package org.academiadecodigo.spaceinvaders;
 
-import org.academiadecodigo.spaceinvaders.game_panel.menus.StartMenu;
 import org.academiadecodigo.spaceinvaders.gameplay.GameBrain;
 
 import javax.swing.JFrame;

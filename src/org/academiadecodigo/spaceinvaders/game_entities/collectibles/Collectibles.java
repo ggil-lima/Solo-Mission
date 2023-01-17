@@ -8,9 +8,11 @@ public interface Collectibles {
 
     void behaviour();
 
-    void animation();
+    void animation(Graphics2D gfx);
 
     Circle getHitbox();
+
+    void fading();
 
     void setIsHit (boolean b);
 

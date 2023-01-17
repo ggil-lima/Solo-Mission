@@ -3,50 +3,38 @@ package org.academiadecodigo.spaceinvaders.game_entities.collectibles;
 import javafx.scene.shape.Circle;
 import org.academiadecodigo.spaceinvaders.game_entities.GameObjects;
 
+import java.awt.*;
+
 public abstract class CollectibleObject extends GameObjects implements Collectibles{
 
     protected boolean isHit;
+    protected boolean flicker;
     protected Circle hitbox;
     private int animationCounter;
-    private int animationFrame;
+
 
 
     public CollectibleObject() {
         animationCounter = 0;
         isHit = false;
-        animationFrame = 1;
+        flicker = false;
     }
 
     @Override
-    public void animation() {
-        if (animationCounter <= 30) {
-            if (animationCounter % 6 == 0) {
-                animationFrame++;
+    public void animation(Graphics2D gfx) {
+        if(animationCounter >= 300 && animationCounter < 360) {
+            if(animationCounter % 10 == 0) {
+                fading();
             }
         }
-        if (animationCounter > 30 && animationCounter <= 60) {
-            if (animationCounter % 6 == 0) {
-                animationFrame--;
+        if(animationCounter >= 360 && animationCounter < 420) {
+            if(animationCounter % 5 == 0) {
+                fading();
             }
         }
-        if (animationCounter > 90 && animationCounter <= 120 ) {
-            if (animationCounter % 6 == 0) {
-                animationCounter++;
-            }
-        }
-        if (animationCounter > 120 && animationCounter <= 180) {
-            if (animationCounter % 6 == 0) {
-                animationFrame--;
-            }
-        }
-        if (animationCounter > 210 && animationCounter <= 240) {
-            if (animationCounter % 6 == 0) {
-                animationFrame++;
-            }
-        }
-        if (animationCounter > 240 && animationCounter <= 270) {
-            if (animationCounter % 6 == 0) {
-                animationFrame--;
+        if(animationCounter >= 420 && animationCounter < 480) {
+            if(animationCounter % 2 == 0) {
+                fading();
             }
         }
     }
@@ -56,10 +44,19 @@ public abstract class CollectibleObject extends GameObjects implements Collectib
         if(!isDestroyed) {
             animationCounter++;
 
-            if (isHit || animationCounter > 300) {
+            if (isHit || animationCounter > 480) {
                 isDestroyed = true;
             }
         }
+    }
+
+    @Override
+    public void fading() {
+        if(!flicker) {
+            flicker = true;
+            return;
+        }
+        flicker = false;
     }
 
     public Circle getHitbox() {

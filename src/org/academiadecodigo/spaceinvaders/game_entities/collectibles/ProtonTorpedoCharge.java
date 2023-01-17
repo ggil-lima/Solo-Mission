@@ -18,16 +18,17 @@ public class ProtonTorpedoCharge<T extends GameObjects> extends CollectibleObjec
         posX = object.getPosX();
         posY = object.getPosY();
 
-//        hc = setImage();
-        hitbox = new Circle(Operations.centerRect(posX, posX + 16), Operations.centerRect(posY, posY + 16), 8);
+        torpedo = setImage("/Proton_Torpedo.png");
+        hitbox = new Circle(Operations.centerRect(posX, posX + 32), Operations.centerRect(posY, posY + 32), 14);
     }
 
     public void draw(Graphics2D gfx) {
         if(!isDestroyed) {
-
-//            gfx.drawImage(torpedo, posX, posY, null);
-            gfx.setColor(Color.white);
-            gfx.drawRect(posX, posY, 16, 16);
+            gfx.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            if(flicker) {
+                gfx.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            }
+            gfx.drawImage(torpedo, posX, posY, null);
         }
     }
 }

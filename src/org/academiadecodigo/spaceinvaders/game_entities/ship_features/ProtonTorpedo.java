@@ -16,8 +16,6 @@ public class ProtonTorpedo<T extends GameObjects> extends GameObjects implements
     private BufferedImage torpedo;
     private BufferedImage flare;
     private BufferedImage explosion;
-    private GameBrain window;
-    private final int maxSpeed = 8;
     private int animationCounter;
     private int torpedoMomentumCounter;
     private int explosionCounter;
